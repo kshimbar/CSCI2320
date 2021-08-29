@@ -20,8 +20,3 @@ void swapref(int &x, int &y){
     x = y;
     y = a;
 }
-
-struct Point{
-    double x;
-    double y;
-}
