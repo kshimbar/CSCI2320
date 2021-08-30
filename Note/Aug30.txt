@@ -1,15 +1,3 @@
-Aug 27th
-double *j = new double (allocated but not initialized)
-double *j =  new double{1.2} //also can do as new double(1.2)
-delete j // this is to free the allocated memory
-int *v = new int[n] // allocae new array of size n
-delete []v // this is to free the memory
-why do we need dynamic memory allocation?
-We can use it at the out side of the scope to reuse the value.
-User defined Types: Structures
-public is for the out side, and you can't access the thing in private from the out side of the scope.
-private is the structure of the public
-
 Aug 30th
 Private is for the structure of the Class
 
