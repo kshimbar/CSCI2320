@@ -7,5 +7,70 @@ delete []v // this is to free the memory
 why do we need dynamic memory allocation?
 We can use it at the out side of the scope to reuse the value.
 User defined Types: Structures
-public is for the out side
+public is for the out side, and you can't access the thing in private from the out side of the scope.
 private is the structure of the public
+
+Aug 30th
+Private is for the structure of the Class
+
+To use the Class
+    Client
+    Function definition(Cpp file has the all implementation)
+    .h file
+
+:: anything to the left is the namespace
+
+Ex.
+Vector.h
+
+Class Vector{
+    public:
+    vector(s)
+    private:
+    ...
+
+}
+
+Vector.cpp
+Vector::vector(int s){
+    ...
+}
+
+Exceptions
+we can use try and catch in Client
+
+Stack and queue
+vector: fixed size, abstract access
+
+The depth first search
+R 1 2 3 4 ...
+The breadth first search
+R 1 5 8 11 15 ...
+
+Stack
+last in first out: LIFO
+add to the top (push)
+remove from the top(pop)
+no taking of internal items
+additional peek operation --  look at the top without removing
+
+If the items in the stack become big, there is another way to handle the data
+
+Stack implementation
+
+class Stack{
+    private:
+        int sz;
+        int top-index;
+        int *elem;
+
+    public:
+        void push(int s);
+        int pop();
+        void empty();
+        int peek();
+}
+
+Struct Stack(int s);
+
+double the size of the array if it is full and free the old array's memory
