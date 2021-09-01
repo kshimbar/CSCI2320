@@ -1,0 +1,56 @@
+Sep 1st
+
+We will use "new" to make a variable of array.
+
+Stack.h
+class Stack {
+    Private:
+        int* elem;
+        int sz;
+        int top;
+    Public:
+        void Push (int i);
+        int pop();
+        bool isEmpty();
+        int peek();
+        Stack(int s){
+            elem {new int[s]};
+            sz{s};
+            top{0};
+        }
+}
+
+Stack.cpp
+void Stack::push(int i){
+    if(sz == top){
+        //make a bigger array
+        int* arr = new int[sz*2];
+        for(int t = 0; t < sz; t++){
+            arr[t] = elem[t]; 
+        }
+        delete[] elem;
+        elem = arr;
+        //if you delete arr, elem can't access to the arr.
+        sz = sz * 2;
+    }
+    elem[top] = i;
+    top++;
+}
+
+Client
+Stack s = new Stack(5)->s.push(10)
+
+Queue
+Very similar to the stack, but add/remove from opposite ends.
+Last in first out
+
+Queue.h
+class Queue{
+    Private:
+        int* elem;
+        int sz;
+        int front;
+        int back;
+    Public:
+        
+}
