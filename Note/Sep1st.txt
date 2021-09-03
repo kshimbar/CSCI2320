@@ -54,3 +54,12 @@ class Queue{
     Public:
         
 }
+
+Deconstructor is used when we don't use the class
+Vector::~Vector()//no parameter here even if you have in the class{
+    delete[] elem;
+    ...
+}
+
+Copy constructor
+Vector::Vctor(const Vsctor& a):elem{new double[sz]}.sz{a.sz} //this is for the copying constructor

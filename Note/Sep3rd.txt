@@ -1,0 +1,22 @@
+Sep 3rd 
+
+Copy constructor
+
+Copy the object that is already definied and initialized
+
+Vector::Vector(const &Vector& a)//using const to make sure not to change the value in the Vector
+    :elem(new double{sz}),sz{a.sz}
+
+Copy Assignment
+Vector& Vector::operator = (const Vector& a){
+    double* p = new double[a.sz]
+    for(int i = 0; i != a.sz; ++i){
+        p[i] = a.elem[i]
+    }
+    delete[] elem;
+    elem = p;
+    sz = a.sz
+    return *this
+}
+
+Templates
