@@ -10,21 +10,18 @@ class ArrayStack : public Stack<T>{
     	ArrayStack() : elem{new T[10]},sz{10},top{0} {};;
 	ArrayStack(int s);
 	ArrayStack(const ArrayStack &a);
-<<<<<<< HEAD
     ArrayStack& operator=(const ArrayStack& a);
 	~ArrayStack() {}
-=======
-    	ArrayStack& operator=(const ArrayStack& a){
-        	T* p = new T[a.sz];
-        	for(int i = 0; i != a.sz; ++i)
-            		p[i] = a.elem[i];
-        	delete[] elem;
-        	elem = p;
-        	sz = a.sz;
-        	top = a.top;
-    	}
-	~ArrayStack() {delete[] elem;}
->>>>>>> 52c9481b686df131d7f1f575b8a9e775bf610d00
+    ArrayStack& operator=(const ArrayStack& a){
+        T* p = new T[a.sz];
+        for(int i = 0; i != a.sz; ++i)
+                p[i] = a.elem[i];
+        delete[] elem;
+        elem = p;
+        sz = a.sz;
+        top = a.top;
+    }
+	~ArrayStack() {delete[] elem;
 	void push(const T &t);
 	T pop();
 	T peek() const;
