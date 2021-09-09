@@ -4,30 +4,23 @@ template<typename T>
 class ArrayQueue : public Queue<T> {
 public:
     explicit ArrayQueue(int s);
+
     ArrayQueue();
-    ArrayQueue(const ArrayQueue &a) : elem{new T[sz]}, sz{a.sz},front{-1},back{-1}{
-        for(int i = 0; i != sz; i++){
-            elem[i] = a.elem[i];
-        }
-    }
-    ArrayQueue &operator=(const ArrayQueue<T> &a){
-        T* p = new T[a.sz];
-        for(int i = 0; i != a.sz; i++){
-            p[i] = a.elem[i];
-        }
-        delete[] elem;
-        elem = p;
-        sz = a.sz;
-        front = a.front;
-        back = a.back;
-    }
-    ~ArrayQueue(){
-        delete[] elem;
-    };
+
+    ArrayQueue(const ArrayQueue &a);
+
+    ArrayQueue &operator=(const ArrayQueue<T> &a);
+
     void enqueue(const T &t);
+
     T dequeue();
+
+    ~ArrayQueue();
+
     T peek() const;
+
     bool isEmpty() const;
+
 
 private:
     T *elem;
@@ -37,13 +30,37 @@ private:
 };
 
 template<typename T>
-T ArrayQueue<T>::peek() const {
-    return elem[front];
+ArrayQueue<T>::ArrayQueue(int s)
+        : elem{new T[s]},
+          sz{s}, front{-1}, back{-1} {
 }
 
 template<typename T>
-bool ArrayQueue<T>::isEmpty() const {
-    return (front == back);
+ArrayQueue<T>::ArrayQueue()
+        : elem{new T[10]},
+          sz{10}, front{-1}, back{-1} {
+
+}
+
+template<typename T>
+ArrayQueue<T>::ArrayQueue(const ArrayQueue<T> &a)
+        :elem{a.elem},
+         sz{a.sz}, front{a.front}, back{a.back} {
+    for (int i = 0; i != sz; ++i) // copy elements
+        elem[i] = a.elem[i];
+}
+
+template<typename T>
+ArrayQueue<T> &ArrayQueue<T>::operator=(const ArrayQueue<T> &a) {
+    T *p = new T[a.sz];
+    for (int i = 0; i != a.sz; ++i)
+        p[i] = a.elem[i];
+    delete[] elem; // delete old elements
+    elem = p;
+    sz = a.sz;
+    front = a.front;
+    back = a.back;
+    
 }
 
 template<typename T>
@@ -78,4 +95,19 @@ T ArrayQueue<T>::dequeue() {
         front = (front + 1) % sz;
     }
     return ret;
+}
+
+template<typename T>
+T ArrayQueue<T>::peek() const {
+    return elem[front];
+}
+
+template<typename T>
+inline bool ArrayQueue<T>::isEmpty() const {
+    return (front== back);
+}
+
+template<typename T>
+ArrayQueue<T>::~ArrayQueue() {
+    delete[] elem;
 }
