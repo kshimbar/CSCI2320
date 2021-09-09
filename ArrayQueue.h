@@ -6,11 +6,31 @@ public:
     explicit ArrayQueue(int s);
 
     ArrayQueue();
+<<<<<<< HEAD
 
     ArrayQueue(const ArrayQueue &a);
 
     ArrayQueue &operator=(const ArrayQueue<T> &a);
 
+=======
+    ArrayQueue(const ArrayQueue &a) : elem{new T[sz]}, sz{a.sz},front{a.front},back{a.back}{
+        for(int i = 0; i != sz; ++i){
+            elem[i] = a.elem[i];
+        }
+    }
+    ArrayQueue &operator=(const ArrayQueue<T> &a){
+        T* p = new T[a.sz];
+        for(int i = 0; i != a.sz; i++){
+            p[i] = a.elem[i];
+        }
+        delete[] elem;
+        elem = p;
+        sz = a.sz;
+        front = a.front;
+        back = a.back;
+    }
+    ~ArrayQueue(){delete[] elem;}
+>>>>>>> 52c9481b686df131d7f1f575b8a9e775bf610d00
     void enqueue(const T &t);
 
     T dequeue();
@@ -30,6 +50,7 @@ private:
 };
 
 template<typename T>
+<<<<<<< HEAD
 ArrayQueue<T>::ArrayQueue(int s)
         : elem{new T[s]},
           sz{s}, front{-1}, back{-1} {
@@ -40,6 +61,13 @@ ArrayQueue<T>::ArrayQueue()
         : elem{new T[10]},
           sz{10}, front{-1}, back{-1} {
 
+=======
+ArrayQueue<T>::ArrayQueue(int s):elem{new T[s]},sz{s},front{0},back{0}{}
+
+template<typename T>
+T ArrayQueue<T>::peek() const {
+    return elem[front];
+>>>>>>> 52c9481b686df131d7f1f575b8a9e775bf610d00
 }
 
 template<typename T>
@@ -96,6 +124,7 @@ T ArrayQueue<T>::dequeue() {
     }
     return ret;
 }
+<<<<<<< HEAD
 
 template<typename T>
 T ArrayQueue<T>::peek() const {
@@ -111,3 +140,5 @@ template<typename T>
 ArrayQueue<T>::~ArrayQueue() {
     delete[] elem;
 }
+=======
+>>>>>>> 52c9481b686df131d7f1f575b8a9e775bf610d00
