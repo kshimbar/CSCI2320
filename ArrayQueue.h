@@ -5,8 +5,8 @@ class ArrayQueue : public Queue<T> {
 public:
     explicit ArrayQueue(int s);
     ArrayQueue();
-    ArrayQueue(const ArrayQueue &a) : elem{new T[sz]}, sz{a.sz},front{-1},back{-1}{
-        for(int i = 0; i != sz; i++){
+    ArrayQueue(const ArrayQueue &a) : elem{new T[sz]}, sz{a.sz},front{a.front},back{a.back}{
+        for(int i = 0; i != sz; ++i){
             elem[i] = a.elem[i];
         }
     }
@@ -21,9 +21,7 @@ public:
         front = a.front;
         back = a.back;
     }
-    ~ArrayQueue(){
-        delete[] elem;
-    };
+    ~ArrayQueue(){delete[] elem;}
     void enqueue(const T &t);
     T dequeue();
     T peek() const;
@@ -35,6 +33,9 @@ private:
     int front;
     int back;
 };
+
+template<typename T>
+ArrayQueue<T>::ArrayQueue(int s):elem{new T[s]},sz{s},front{0},back{0}{}
 
 template<typename T>
 T ArrayQueue<T>::peek() const {

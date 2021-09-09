@@ -7,20 +7,19 @@ class ArrayStack : public Stack<T>{
         int top;
         void print() const;
     public:
-    ArrayStack() : elem{new T[10]},sz{10},top{0} {};;
-	ArrayStack(int s);//length for the array
+    	ArrayStack() : elem{new T[10]},sz{10},top{0} {};;
+	ArrayStack(int s);
 	ArrayStack(const ArrayStack &a);
-    ArrayStack& operator=(const ArrayStack& a){
-        T* p = new T[a.sz];
-        for(int i = 0; i != a.sz; i++){
-            p[i] = a.elem[i];
-        }
-        delete[] elem;
-        elem = p;
-        sz = a.sz;
-        top = a.top;
-    }
-	~ArrayStack() {}
+    	ArrayStack& operator=(const ArrayStack& a){
+        	T* p = new T[a.sz];
+        	for(int i = 0; i != a.sz; ++i)
+            		p[i] = a.elem[i];
+        	delete[] elem;
+        	elem = p;
+        	sz = a.sz;
+        	top = a.top;
+    	}
+	~ArrayStack() {delete[] elem;}
 	void push(const T &t);
 	T pop();
 	T peek() const { return elem[top]; }
@@ -28,10 +27,9 @@ class ArrayStack : public Stack<T>{
 };
 
 template<typename T>
-ArrayStack<T>::ArrayStack(const ArrayStack &a)
-:elem{new T[sz]},sz{a.sz},top{a.top} {
-    for(int i = 0; i != sz; i++)
-        elem[i] = a.elem[i];
+ArrayStack<T>::ArrayStack(const ArrayStack &a):elem{new T[sz]},sz{a.sz},top{a.top} {
+    	for(int i = 0; i != sz; i++)
+        	elem[i] = a.elem[i];
 }
 
 template<typename T>
@@ -51,9 +49,5 @@ void ArrayStack<T>::push(const T &t){
 
 template <typename T>
 T ArrayStack<T>::pop(){
-    if(top == 0){
-        return NULL;
-    }else{
-        return elem[--top];
-    }
+    return elem[--top];
 }
