@@ -1,0 +1,29 @@
+Standard Library
+    Run-time language support
+    C standard Library
+    Strings and IO stream
+
+    Using #include to put Library
+    the standaed library is defines in a namespace called std 
+
+Adding string
+    s1 = s1 + '\n'
+    s1 += 'n'
+
+    substr()
+    will return string
+    it takes 2 prameters the first one is the index of the string
+    the second prameters is the length of the string
+
+    replace()
+    will return string
+    takes 3 prameters
+    the first one is the index of the string
+    the second one is the length that you will replace 
+    the third one is the string that you want to replace
+
+Input
+    istream and ostream 
+    cin is for the Input (if there is a space, you can read the line)
+    we use >> for the Input 
+    use getline to read the whole line 
