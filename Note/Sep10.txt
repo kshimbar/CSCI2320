@@ -27,3 +27,4 @@ Input
     cin is for the Input (if there is a space, you can read the line)
     we use >> for the Input 
     use getline to read the whole line 
+

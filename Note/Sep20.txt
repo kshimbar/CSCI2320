@@ -1,0 +1,8 @@
+Sep 20th
+
+Linked List 
+    we have series of nodes
+
+Class Node{
+    
+}

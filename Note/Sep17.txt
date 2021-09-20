@@ -1,0 +1,47 @@
+Sep 17th
+___--------___
+|            |
+|   -     -  |
+|   O     O  |
+\      |     /
+ \    ___   / 
+  \        /
+   --------
+
+int main(){
+    ArrayList<Int> al;
+
+    al.push_back(1)
+    al.push
+}
+
+class ArrayList{
+    T* elem
+    unsinged Int
+    unsinged Int
+};
+
+class iterator{
+    T* loc;
+    public:
+    iterator(T*l) : loc{l}{}
+    iterator(){}
+    iterator(const iterator &i){}
+    T* operator(){}
+    bool operator == (const iterator &i) const{return loc == i.loc;}
+    bool operator != (const iterator &i) const{return !(*this == i);}
+    iterator &operator ++()
+    iterator &operator --()
+    iterator operator++(int){}
+    iterator operator--(int){}
+};
+
+class const_iterator{
+    public:
+    const_iterator(T *l)
+}
+
+template <typename T>
+typename ArrayList<T> :: operator[](int: index) const {
+    
+}

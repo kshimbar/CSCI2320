@@ -1,0 +1,15 @@
+Sep 13th
+
+Circular Queue
+buffer of size N data
+begin to store start of the Queue
+size to hold number of elements in Queue
+end is calulated and not stored
+    end = (begin + size) % n
+
+Indicator of current lovation in the Queue
+offset = 0 begining of the Queue
+offset  = size end of the Queue
+anything else is somewhere in the middle of the Queue
+
+operator!=() is true if two iterators have rither different ring queue

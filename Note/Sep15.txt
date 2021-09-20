@@ -1,0 +1,4 @@
+Sep 15th
+
+1. Copy and paste the code in the google class room to ArrayList.h
+2. 
