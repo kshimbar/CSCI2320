@@ -4,5 +4,11 @@ Linked List
     we have series of nodes
 
 Class Node{
-    
+    T data;
+    Node* next;
+}
+
+class LinedList{
+    Node* head;
+    Node* tail;
 }
