@@ -6,9 +6,38 @@ Linked List
 Class Node{
     T data;
     Node* next;
+    Node* prev
 }
 
 class LinedList{
     Node* head;
     Node* tail;
+    Node sent;
+    LinkedList(){
+        head = nullptr
+        tail = nullptr
+        sent = new Node(nullptr,nullptr)
+    }
+}
+pushback(T data){
+    Node n = new Node(data, &sent, &sent)
+    //empty
+    head = n 
+    tail = n 
+    sent.prev = n
+    sent.next = n 
+
+    //not emtpy
+    tail.next = n 
+    sent.prev = n 
+    tail = n
+}
+
+popback(){
+    Node ret = tail
+    tail.prev.next = sent
+    sent.prev = tail.prev
+    ret.prev = nullptr
+    ret.next = nullptr
+    return ret
 }
