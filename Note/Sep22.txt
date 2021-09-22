@@ -1,0 +1,29 @@
+class LinkedList{
+struct Node(){
+    Node(){}
+    Node(const T &d, Node *p, Node *n){}
+    T data
+    Node* prev, *next
+}
+unsined int ct;
+Node *head
+Node *tail
+Node sent
+
+public:
+    typedef T value_type
+    class const_iterator
+    class iterator{
+        Node *loc
+        public:
+        iterator(Node *l){loc = l}
+        iterator():loc(nullptr){}
+        T& operator*(){return loc->data;}
+        friend class const_iterator
+        friend class LinkedList
+    }
+    class const_iterator{
+        Node *loc
+        const_iterator(const Node *l){loc = l}
+    }
+}
