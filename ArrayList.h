@@ -4,15 +4,15 @@ class ArrayList {
 	T* elem;
 	unsigned int elemCt;
 	unsigned int sz;
-    void newArr(){
-        T* tmp = new T[sz * 2];
-        for(int i = 0; i < sz; ++i){
-            tmp[i] = elem[i];
-        }
-        delete[] elem;
-        elem = tmp;
-        sz *= 2;
-    }
+    	void newArr(){
+        	T* tmp = new T[sz * 2];
+        	for(int i = 0; i != sz; ++i){
+            		tmp[i] = elem[i];
+        	}
+        	delete[] elem;
+        	elem = tmp;
+        	sz *= 2;
+    	}
 
 	public:
 // value_type
@@ -22,55 +22,67 @@ class ArrayList {
 		public:
 		iterator(T *l) : loc{l} {}
 		iterator() {}
-		iterator(const iterator &i): loc{i.loc} {loc = i.loc;}
+		iterator(const iterator &i): loc{i.loc} {}
 		T &operator*() { return *loc; }
 		bool operator==(const iterator &i) const { return loc == i.loc; }
 		bool operator!=(const iterator &i) const { return !(*this == i); }
 		iterator &operator=(const iterator &i) {loc = i.loc; return *this;}
 		iterator &operator++() {++loc; return *this;}
 		iterator &operator--() {--loc; return *this;}
-		iterator operator++() {
-            auto ret = loc;
-            loc++;
-            return ret;
-        }
-		iterator operator--() {
-            auto ret = loc;
-            loc--;
-            return ret;
-        }
+		iterator &operator++(int) {
+            		auto ret = loc;
+           		loc++;
+            		return ret;
+        	}
+		iterator &operator--(int) {
+            		auto ret = loc;
+            		loc--;
+            		return ret;
+        	}
 	};
 // const_iterator
 	class const_iterator {
         T* loc;
 		public:
-		const_iterator(T *l) {}
+		const_iterator(T *l) : loc{l} {}
 		const_iterator() {}
-		const_iterator(const const_iterator &i) {}
-		T &operator*() {}
-		bool operator==(const const_iterator &i) const {return *this == i;}
+		const_iterator(const const_iterator &i): loc {i.loc}{}
+		T &operator*() {return *loc;}
+		bool operator==(const const_iterator &i) const {return loc == i.loc;}
 		bool operator!=(const const_iterator &i) const {return !(*this == i);}
 		const_iterator &operator=(const const_iterator &i) {loc = i.loc; return *this;}
 		const_iterator &operator++() {++loc; return *this;}
 		const_iterator &operator--() {--loc; return *this;}
-		const_iterator operator++() {
-            auto ret = loc;
-            loc++;
-            return ret;
-        }
-		const_iterator operator--() {
-            auto ret = loc;
-            loc--;
-            return ret;
-        }
+		const_iterator operator++(int) {
+            		auto ret = loc;
+            		loc++;
+            		return ret;
+        	}
+		const_iterator operator--(int) {
+            		auto ret = loc;
+            		loc--;
+            		return ret;
+        	}
 	};
 
 // General Methods
 ArrayList() : elem{new T[10]}, elemCt{0}, sz{10} {}
-ArrayList(const ArrayList &that) {}
-ArrayList<T> &operator=(const ArrayList<T> &al) {}
+ArrayList(const ArrayList &that) : elem{new T[that.sz]}, elemCt{that.elemCt},sz{that.sz}{
+	for (int i = 0; i != sz; i++)
+		elem[i] = that.elem[i];
+} 
+ArrayList<T> &operator=(const ArrayList<T> &al) {
+	T* tmp = new T[al.sz];
+	for(int i = 0; i != sz; ++i)
+		tmp[i] = al.elem[i];
+	delete[] elem;
+	elem = tmp;
+	sz = al.sz;
+	elemCt = al.elemCt;
+	return *this;
+}
 
-~ArrayList() {}
+~ArrayList() {delete[] elem;} 
 void push_back(const T &t); // add to the end.
 void pop_back(); // remove last element.
 int size();
@@ -125,13 +137,13 @@ typename ArrayList<T>::const_iterator ArrayList<T>::cend() const {
 
 template<typename T>
 void ArrayList<T>::push_back(const T &t) {
-    if(sz == elemCt) newArr();
+    	if(sz == elemCt) newArr();
 	elem[elemCt++] = t;
 }
 
 template<typename T>
 void ArrayList<T>::pop_back() {
-    elem[elemCt--];
+    	elemCt--;
 }
 
 template<typename T>
@@ -141,24 +153,24 @@ int ArrayList<T>::size(){
 
 template<typename T>
 void ArrayList<T>::clear() {
-	delete[] elem;
-    elemCt = 0;
+    	elemCt = 0;
 }
 
 template<typename T>
 void ArrayList<T>::remove(int index) {
 	for(int i = index; i < elemCt - 1; ++i){
-        elem[i] = elem[i + 1];
-    }
+        	elem[i] = elem[i + 1];
+    	}
+	elemCt--;
 }
 
 template<typename T>
 void ArrayList<T>::insert(const T &t, int index) {
-    if(sz == elemCt) newArr();
+    	if(sz == elemCt) newArr();
 	for(int i = elemCt; i > index; --i){
-        elem[i] = elem[i - 1];
-    }
-    elem[index] = t;
-    elemCt++;
+        	elem[i] = elem[i - 1];
+    	}
+    	elem[index] = t;
+    	elemCt++;
 }
 

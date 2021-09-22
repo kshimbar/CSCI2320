@@ -64,7 +64,6 @@ bool simpleTest(T &lst1) {
 	if(lst1[2]!=7) { cout << "[2] error." << endl; return false; }
 	if(lst1[3]!=8) { cout << "[3] error." << endl; return false; }
 	if(lst1[4]!=9) { cout << "[4] error." << endl; return false; }
-
 	int cnt = 5;
 	for(auto iter = lst1.begin(); iter!=lst1.end(); ++iter) {
 		if(*iter!=cnt) {
@@ -74,6 +73,7 @@ bool simpleTest(T &lst1) {
 		--(*iter);
 		++cnt;
 	}
+	//seg fault here
 	cnt = 4;
 	for(auto iter = lst1.cbegin(); iter!=lst1.cend(); ++iter) {
 		if(*iter!=cnt) {
@@ -97,6 +97,7 @@ bool simpleTest(T &lst1) {
 	}
 	T lst2(lst1);
 	lst1.remove(2);
+	cout << "remove passed" << endl;
 	if(lst1[0]!=4) { cout << "After remove lst1[0]." << endl; return false; }
 	if(lst1[1]!=5) { cout << "After remove lst1[1]." << endl; return false; }
 	if(lst1[2]!=7) { cout << "After remove lst1[2]." << endl; return false; }
@@ -108,12 +109,14 @@ bool simpleTest(T &lst1) {
 	if(lst2[4]!=8) { cout << "After remove lst2[4]." << endl; return false; }
 	lst2.insert(98,3);
 	if(lst2[0]!=4) { cout << "After insert lst2[0]." << endl; return false; }
+	cout << "insert passed" << endl;
 	if(lst2[1]!=5) { cout << "After insert lst2[1]." << endl; return false; }
 	if(lst2[2]!=99) { cout << "After insert lst2[2]." << endl; return false; }
 	if(lst2[3]!=98) { cout << "After insert lst2[3]." << endl; return false; }
 	if(lst2[4]!=7) { cout << "After insert lst2[4]." << endl; return false; }
 	if(lst2[5]!=8) { cout << "After insert lst2[5]." << endl; return false; }
 	lst2.pop_back();
+	cout << "pop back passed" << endl;
 	if(lst2.size()!=5) { cout << "bad size after pop_back." << endl; return false; }
 	lst2.pop_back();
 	if(lst2.size()!=4) { cout << "bad size after pop_back." << endl; return false; }
