@@ -1,0 +1,66 @@
+Sep 27th
+
+File type
+
+Text
+    SOme auto formating
+    "\n" will be the new line
+    can read/write in large formatted chunks
+
+Binary
+    all data is in terms of bytes
+    some may be readable, may not
+    much more efficient for certain type of the data
+        images, audio, database
+
+File streams
+    access to file data in C++ is thorugh streams
+    similat to cin and cout
+        global member of classes istream and ostream 
+        fila stream are input/output stream specific for file
+    #include <fstream>
+
+FILE 
+    give access to streams
+    more efficient sometimes
+
+    FILE * pfile;
+    pFile = fopen("text.txt", "w")
+    if(pFile != NULL){
+        fputs("fopen example",pFile)
+        fclose(pFile)
+    }
+
+    int x;
+    ifstream infile
+    infile.open("text.txt", ios::binary | ios::in)
+    infile.read(&x,7)//reads 7 bytes and saves to x
+
+important file operations
+    fopen
+    freopen
+    fclose
+    fflush
+    fread 
+    fwrite
+
+Positioning
+    ftel
+        returns the current position indicator
+    fgetpos
+        gets the file position indicator
+    fseek
+        moves the file position indicator to specific location in a file
+
+    fsetpos
+        same as fseek
+    rewind
+        movesthe file mosition indicator to the beggining of the file
+    
+SEEK
+    SEEK_SET
+        seeking from the beggining of the file
+    SEEK_CUR
+        seeking from the current position
+    SEEK_END
+        seeking from the end

@@ -19,11 +19,54 @@ public:
         iterator(Node *l){loc = l}
         iterator():loc(nullptr){}
         T& operator*(){return loc->data;}
+        bool operator=={const iterator &i} const {return loc == i.loc}
+        bool operator!={const iterator &i} const {return !(*this == i);}
+        iterator& operator++() const {loc = loc -> next; return *this}
+        iterator& operator--(int) {
+            iterator tmp(loc);
+            loc = loc -> prev;
+            return *this
+        }
         friend class const_iterator
         friend class LinkedList
     }
     class const_iterator{
         Node *loc
         const_iterator(const Node *l){loc = l}
+    }
+
+    LinkedList(){
+        sent.next = &sent;
+        sent.prev = &sent;
+        ct = 0;
+    }
+    LinkedList(const LinkedList &al){}
+    void pop_back(const T &t){
+        Node *n = new Node(t,sent.prev,&sent)
+        sent.prev = n
+        n -> prev -> next = n
+        ++ct
+    }
+    void print(){
+        for(auto rover = sent.next; rover != &sent; rover = rover -> next){
+            std << cout << rover -> data << std::endl;
+        }
+    }
+
+    iterator begin(){
+        return iterator(sent.next)
+    }
+
+    const_iterator cbegin(){
+
+    }
+    const_iterator end() const;
+    const_iterator cend() const;
+    void push_back(){
+        Node* vistim = New Node(t,sent.prev,&sent)
+        sent.prev->prev->next = &sent
+        sent.prev = sent->prev->prev;
+        delete victim;
+        --ct
     }
 }
