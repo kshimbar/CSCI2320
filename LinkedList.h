@@ -37,8 +37,9 @@ friend class const_iterator;
 friend class LinkedList;
 };
 class const_iterator {
-Node * loc;
+const Node * loc;
 public:
+const_iterator() {}
 const_iterator(const Node *l){loc = l;}
 // TODO - Include a constructor that converts from a regular iterator.
 const T &operator*() { return loc -> data; }
@@ -81,7 +82,7 @@ LinkedList &operator=(const LinkedList &l) {
     return *this;
 }
 ~LinkedList() {
-    for(iterator rover = begin(); rover != end();rover++){
+    for(iterator rover = begin(); rover != end();++rover){
         delete rover.loc;
     }
     ct = 0;
@@ -107,7 +108,7 @@ void clear(){
     ct = 0;
 }
 iterator insert(iterator position,const T &t){
-    Node *n = new Node(t,position.loc,position.loc->prev);
+    Node *n = new Node(t,position.loc->prev,position.loc);
     position.loc->prev->next = n;
     position.loc->prev = n;
     ct++;
@@ -122,22 +123,24 @@ const T &operator[](int index) const{
 } // get the element at index.
 T &operator[](int index){
     Node *tmp = sent.next;
-    while(tmp != &sent && index-- > 0){
-        tmp = tmp->next;
-    }
+    while(tmp != &sent && index-- > 0)
+        tmp = tmp->next; 
     return tmp->data;
 } // get the element at index.
 iterator erase(iterator position){
+	iterator tmp{position.loc->next};
     position.loc->prev->next = position.loc->next;
     position.loc->next->prev = position.loc->prev;
     ct -= 1;
-    return --position;
+	delete position.loc;
+    return tmp;
 } // remove the item at the given index.
 
-iterator begin();
-const_iterator begin() const;
-iterator end();
-const_iterator end() const;
-const_iterator cbegin() const;
-const_iterator cend() const;
+iterator begin(){return iterator(sent.next);}
+const_iterator begin() const {return const_iterator(sent.next);}
+iterator end(){return iterator(&sent);}
+const_iterator end() const {return const_iterator(&sent);}
+const_iterator cbegin() const {return const_iterator(sent.next);};
+const_iterator cend() const{return const_iterator(&sent);}
+
 };
