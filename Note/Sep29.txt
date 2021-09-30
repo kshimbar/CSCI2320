@@ -1,0 +1,47 @@
+Sep 20th
+
+#include "FooClass"
+#include <iostream>
+
+using std::cout
+using std::endl 
+using std:: string 
+
+class writeText(){
+    FILE * f 
+    f = fopen("t.txt","w")
+    if(f == null) cout << "error"
+    string str = "text"
+    fwrite(str.c_str(),str.size(),1,f)
+    fflush(f)
+    fclose(f)
+}
+
+
+void writeObject(FooCLass toWrite){
+    FILE*f = fopen("t.txt","w")
+    FooClass readOb
+    readObj.read(f)
+    fclose(f)
+}
+
+class FooClass{
+    public:
+    int a;
+    double b;
+    FooClass(int _a, double _b) : a{_a}, b{_b} {}
+    ~FooClass(){}
+
+    void save(FILE *f){
+        fseek(f,ind* sizeof(int)+sizeof(double))
+        fwrite(&a, sizeof(int),1,f)
+        fwrite(&b,sizeof(double),1,f)
+    }
+
+    void read(FILE *f){
+        fseek(f, 0,SEEK_SET)
+        fread()
+    }
+    //fflush(f)
+    //fclose(f)
+}

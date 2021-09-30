@@ -1,34 +1,16 @@
 #include<iostream>
 #include<fstream>
 #include<string>
-#include<vector>
+#include<list>
 #include<cstdlib>
-#include "ArrayList.h"
+#include "LinkedList.h"
 
 using std::ofstream;
 using std::cout;
 using std::endl;
 using std::string;
-using std::vector;
+using std::list;
 using std::rand;
-
-// TODO put in a bigger test for a longer total runtime. 1.7 secs is not enough.
-/*
-void fillRandomIntStack(int numElems,ArrayStack<int> &s,vector<int> &v) {
-	for(int i=0; i<numElems; ++i) {
-		v.push_back(rand());
-		s.push(v.back());
-	}
-}
-
-void fillRandomStringStack(int numElems,ArrayStack<string> &s,vector<string> &v) {
-	for(int i=0; i<numElems; ++i) {
-		string str(1+rand()%10,32+rand()%70);
-		v.push_back(str);
-		s.push(v.back());
-	}
-}
-*/
 
 template<typename T>
 bool passByValue(T lst) {
@@ -37,19 +19,19 @@ bool passByValue(T lst) {
 	return lst.size()==tmp+1 && lst[tmp]==5;
 }
 
-ArrayList<int> returnLittleAL() {
-	ArrayList<int> ret;
+LinkedList<int> returnLittleLL() {
+	LinkedList<int> ret;
 	ret.push_back(1);
 	ret.push_back(2);
 	ret.push_back(3);
 	return ret;
 }
 
-ArrayList<int> add3AndReturn(ArrayList<int> al) {
-	al.push_back(9);
-	al.push_back(8);
-	al.push_back(7);
-	return al;
+LinkedList<int> add3AndReturn(LinkedList<int> ll) {
+	ll.push_back(9);
+	ll.push_back(8);
+	ll.push_back(7);
+	return ll;
 }
 
 template<typename T>
@@ -64,6 +46,7 @@ bool simpleTest(T &lst1) {
 	if(lst1[2]!=7) { cout << "[2] error." << endl; return false; }
 	if(lst1[3]!=8) { cout << "[3] error." << endl; return false; }
 	if(lst1[4]!=9) { cout << "[4] error." << endl; return false; }
+
 	int cnt = 5;
 	for(auto iter = lst1.begin(); iter!=lst1.end(); ++iter) {
 		if(*iter!=cnt) {
@@ -73,7 +56,6 @@ bool simpleTest(T &lst1) {
 		--(*iter);
 		++cnt;
 	}
-	//seg fault here
 	cnt = 4;
 	for(auto iter = lst1.cbegin(); iter!=lst1.cend(); ++iter) {
 		if(*iter!=cnt) {
@@ -96,27 +78,24 @@ bool simpleTest(T &lst1) {
 		return false;
 	}
 	T lst2(lst1);
-	lst1.remove(2);
-	cout << "remove passed" << endl;
-	if(lst1[0]!=4) { cout << "After remove lst1[0]." << endl; return false; }
-	if(lst1[1]!=5) { cout << "After remove lst1[1]." << endl; return false; }
-	if(lst1[2]!=7) { cout << "After remove lst1[2]." << endl; return false; }
-	if(lst1[3]!=8) { cout << "After remove lst1[3]." << endl; return false; }
-	if(lst2[0]!=4) { cout << "After remove lst2[0]." << endl; return false; }
-	if(lst2[1]!=5) { cout << "After remove lst2[1]." << endl; return false; }
-	if(lst2[2]!=99) { cout << "After remove lst2[2]." << endl; return false; }
-	if(lst2[3]!=7) { cout << "After remove lst2[3]." << endl; return false; }
-	if(lst2[4]!=8) { cout << "After remove lst2[4]." << endl; return false; }
-	lst2.insert(98,3);
+	lst1.erase(++++lst1.begin());
+	if(lst1[0]!=4) { cout << "After erase lst1[0]." << endl; return false; }
+	if(lst1[1]!=5) { cout << "After erase lst1[1]." << endl; return false; }
+	if(lst1[2]!=7) { cout << "After erase lst1[2]." << endl; return false; }
+	if(lst1[3]!=8) { cout << "After erase lst1[3]." << endl; return false; }
+	if(lst2[0]!=4) { cout << "After erase lst2[0]." << endl; return false; }
+	if(lst2[1]!=5) { cout << "After erase lst2[1]." << endl; return false; }
+	if(lst2[2]!=99) { cout << "After erase lst2[2]." << endl; return false; }
+	if(lst2[3]!=7) { cout << "After erase lst2[3]." << endl; return false; }
+	if(lst2[4]!=8) { cout << "After erase lst2[4]." << endl; return false; }
+	lst2.insert(++++++lst2.begin(),98);
 	if(lst2[0]!=4) { cout << "After insert lst2[0]." << endl; return false; }
-	cout << "insert passed" << endl;
 	if(lst2[1]!=5) { cout << "After insert lst2[1]." << endl; return false; }
 	if(lst2[2]!=99) { cout << "After insert lst2[2]." << endl; return false; }
 	if(lst2[3]!=98) { cout << "After insert lst2[3]." << endl; return false; }
 	if(lst2[4]!=7) { cout << "After insert lst2[4]." << endl; return false; }
 	if(lst2[5]!=8) { cout << "After insert lst2[5]." << endl; return false; }
 	lst2.pop_back();
-	cout << "pop back passed" << endl;
 	if(lst2.size()!=5) { cout << "bad size after pop_back." << endl; return false; }
 	lst2.pop_back();
 	if(lst2.size()!=4) { cout << "bad size after pop_back." << endl; return false; }
@@ -135,11 +114,11 @@ bool stringTest(T &lst1) {
 	lst1.push_back("7");
 	lst1.push_back("8");
 	lst1.push_back("9");
-	if(lst1[0]!="5") { cout << "[0] error." << endl; return false; }
-	if(lst1[1]!="6") { cout << "[1] error." << endl; return false; }
-	if(lst1[2]!="7") { cout << "[2] error." << endl; return false; }
-	if(lst1[3]!="8") { cout << "[3] error." << endl; return false; }
-	if(lst1[4]!="9") { cout << "[4] error." << endl; return false; }
+	if(lst1[0]!="5") { cout << "string [0] error." << endl; return false; }
+	if(lst1[1]!="6") { cout << "string [1] error." << endl; return false; }
+	if(lst1[2]!="7") { cout << "string [2] error." << endl; return false; }
+	if(lst1[3]!="8") { cout << "string [3] error." << endl; return false; }
+	if(lst1[4]!="9") { cout << "string [4] error." << endl; return false; }
 
 	lst1[2] = "99";
 	if(lst1[2]!="99") {
@@ -147,32 +126,32 @@ bool stringTest(T &lst1) {
 		return false;
 	}
 	T lst2(lst1);
-	lst1.remove(2);
-	if(lst1[0]!="5") { cout << "After remove lst1[0]." << endl; return false; }
-	if(lst1[1]!="6") { cout << "After remove lst1[1]." << endl; return false; }
-	if(lst1[2]!="8") { cout << "After remove lst1[2]." << endl; return false; }
-	if(lst1[3]!="9") { cout << "After remove lst1[3]." << endl; return false; }
-	if(lst2[0]!="5") { cout << "After remove lst2[0]." << endl; return false; }
-	if(lst2[1]!="6") { cout << "After remove lst2[1]." << endl; return false; }
-	if(lst2[2]!="99") { cout << "After remove lst2[2]." << endl; return false; }
-	if(lst2[3]!="8") { cout << "After remove lst2[3]." << endl; return false; }
-	if(lst2[4]!="9") { cout << "After remove lst2[4]." << endl; return false; }
-	lst2.insert("98",3);
-	if(lst2[0]!="5") { cout << "After insert lst2[0]." << endl; return false; }
-	if(lst2[1]!="6") { cout << "After insert lst2[1]." << endl; return false; }
-	if(lst2[2]!="99") { cout << "After insert lst2[2]." << endl; return false; }
-	if(lst2[3]!="98") { cout << "After insert lst2[3]." << endl; return false; }
-	if(lst2[4]!="8") { cout << "After insert lst2[4]." << endl; return false; }
-	if(lst2[5]!="9") { cout << "After insert lst2[5]." << endl; return false; }
+	lst1.erase(lst1.begin()++++);
+	if(lst1[0]!="5") { cout << "string After erase lst1[0]." << endl; return false; }
+	if(lst1[1]!="6") { cout << "string After erase lst1[1]." << endl; return false; }
+	if(lst1[2]!="8") { cout << "string After erase lst1[2]." << endl; return false; }
+	if(lst1[3]!="9") { cout << "string After erase lst1[3]." << endl; return false; }
+	if(lst2[0]!="5") { cout << "string After erase lst2[0]." << endl; return false; }
+	if(lst2[1]!="6") { cout << "string After erase lst2[1]." << endl; return false; }
+	if(lst2[2]!="99") { cout << "string After erase lst2[2]." << endl; return false; }
+	if(lst2[3]!="8") { cout << "string After erase lst2[3]." << endl; return false; }
+	if(lst2[4]!="9") { cout << "string After erase lst2[4]." << endl; return false; }
+	lst2.insert(lst1.begin()++++++,"98");
+	if(lst2[0]!="5") { cout << "string After insert lst2[0]." << endl; return false; }
+	if(lst2[1]!="6") { cout << "string After insert lst2[1]." << endl; return false; }
+	if(lst2[2]!="99") { cout << "string After insert lst2[2]." << endl; return false; }
+	if(lst2[3]!="98") { cout << "string After insert lst2[3]." << endl; return false; }
+	if(lst2[4]!="8") { cout << "string After insert lst2[4]." << endl; return false; }
+	if(lst2[5]!="9") { cout << "string After insert lst2[5]." << endl; return false; }
 	lst2.pop_back();
-	if(lst2.size()!=5) { cout << "bad size after pop_back." << endl; return false; }
+	if(lst2.size()!=5) { cout << "string bad size after pop_back." << endl; return false; }
 	lst2.pop_back();
-	if(lst2.size()!=4) { cout << "bad size after pop_back." << endl; return false; }
+	if(lst2.size()!=4) { cout << "string bad size after pop_back." << endl; return false; }
 	lst2.pop_back();
-	if(lst2.size()!=3) { cout << "bad size after pop_back." << endl; return false; }
-	if(lst2[0]!="5") { cout << "After pop_back lst2[0]." << endl; return false; }
-	if(lst2[1]!="6") { cout << "After pop_back lst2[1]." << endl; return false; }
-	if(lst2[2]!="99") { cout << "After pop_back lst2[2]." << endl; return false; }
+	if(lst2.size()!=3) { cout << "string bad size after pop_back." << endl; return false; }
+	if(lst2[0]!="5") { cout << "string After pop_back lst2[0]." << endl; return false; }
+	if(lst2[1]!="6") { cout << "string After pop_back lst2[1]." << endl; return false; }
+	if(lst2[2]!="99") { cout << "string After pop_back lst2[2]." << endl; return false; }
 	return true;
 }
 
@@ -180,68 +159,79 @@ int main(int argc,char **argv) {
 	ofstream out("time.txt");
 	std::srand(42);
 
-	ArrayList<int> al1;
-	if(!simpleTest(al1)) return 2;
-	if(!passByValue(al1)) {
-		cout << "Failed ArrayList pass-by-value." << endl;
+	LinkedList<int> ll1;
+	if(!simpleTest(ll1)) return 2;
+	if(!passByValue(ll1)) {
+		cout << "Failed LinkedList pass-by-value." << endl;
 		return 2;
 	}
-	ArrayList<int> al2 = returnLittleAL();
-	if(al2[0]!=1 || al2[1]!=2 || al2[2]!=3) {
-		cout << "Failed return by value ArrayList." << endl;
+	LinkedList<int> ll2 = returnLittleLL();
+	if(ll2[0]!=1 || ll2[1]!=2 || ll2[2]!=3) {
+		cout << "Failed return by value LinkedList." << endl;
 		return 2;
 	}
-	al1 = returnLittleAL();
-	if(al1[0]!=1 || al1[1]!=2 || al1[2]!=3) {
-		cout << "Failed return by value-assign ArrayList." << endl;
+	ll1 = returnLittleLL();
+	if(ll1[0]!=1 || ll1[1]!=2 || ll1[2]!=3) {
+		cout << "Failed return by value-assign LinkedList." << endl;
 		return 2;
 	}
 
+	LinkedList<string> llstr;
+	stringTest(llstr);
+
 	long long n = 50000;
 	long long ans1 = n*(n-1)/2;
-	long long ans2 = 624975000L;
 
 	cout << "Starting timing." << endl;
 	double start = clock();
 
-	ArrayList<int> al3;
-	vector<int> v3;
+	LinkedList<int> ll3;
+	list<int> v3;
 	for(int i=0; i<n; ++i) {
-		al3.push_back(i);
+		ll3.push_back(i);
 		v3.push_back(i);
 	}
 	long long sum = 0;
-	for(auto i:al3) sum += i;
+	long long sum2 = 0;
+	for(auto i:ll3) sum += i;
+	for(auto i:v3) sum2 += i;
 	if(sum!=ans1) {
-		cout << "Failed AL big 1." << endl;
+		cout << "Failed LL big 1." << endl;
 		return 2;
 	}
 	cout << "Passed big 1 set." << endl;
-	for(int i = 1; i<al3.size(); ++i) {
-		al3.remove(i);
-		v3.erase(v3.begin()+i);
+	auto vi = ++(v3.begin());
+	for(auto i = ++(ll3.begin()); i!=ll3.end(); ) {
+		i = ll3.erase(i);
+		vi = v3.erase(vi);
+		if(i!=ll3.end()) {
+			++i;
+			++vi;
+		}
 	}
 	sum = 0;
-	for(auto i:al3) sum += i;
-	if(sum!=ans2) {
-		cout << sum << " " << ans2 << endl;
-		cout << "Failed AL big 2." << endl;
+	sum2 = 0;
+	for(auto i:ll3) sum += i;
+	for(auto i:v3) sum2 += i;
+	if(sum!=sum2) {
+		cout << "Failed LL big 2." << endl;
 		return 2;
 	}
 	cout << "Passed big 2 set." << endl;
 
 	for(int i=0; i<10000000; ++i) {
 		int tmp = rand()%100;
-		al3.push_back(tmp);
 		v3.push_back(tmp);
+		ll3.push_back(tmp);
 	}
-	ArrayList<int> al4 = add3AndReturn(al3);
+	LinkedList<int> ll4 = add3AndReturn(ll3);
 	long long sum1 = 0;
-	long long sum2 = 0;
-	for(auto i:al4) sum1 += i;
-	for(auto i:v3) sum2 += i;
-	if(sum1!=sum2+24) {
-		cout << "Failed big test 3. " << sum1 << " " << sum2 << endl;
+	sum2 = 0;
+	for(auto i:v3) sum1 += i;
+	for(auto i:ll4) sum2 += i;
+	if(sum1+24!=sum2) {
+		cout << sum1 << " " << sum2 << "\n";
+		cout << "Failed big test 3." << endl;
 		return 2;
 	}
 
