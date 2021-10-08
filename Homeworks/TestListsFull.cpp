@@ -112,6 +112,7 @@ bool simpleTest(T &lst1,const string &secondFile) {
 	if(lst1[1]!=6) { cout << "After erase lst1[1]." << endl; return false; }
 	if(lst1[2]!=8) { cout << "After erase lst1[2]." << endl; return false; }
 	if(lst1[3]!=9) { cout << "After erase lst1[3]." << endl; return false; }
+	cout << lst2[0] << endl;
 	if(lst2[0]!=5) { cout << "After erase lst2[0]." << endl; return false; }
 	if(lst2[1]!=6) { cout << "After erase lst2[1]." << endl; return false; }
 	if(lst2[2]!=99) { cout << "After erase lst2[2]." << endl; return false; }
