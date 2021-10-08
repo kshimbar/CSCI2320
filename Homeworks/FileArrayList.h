@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include<cstdio>
-#include <string>
 using std::fopen;
 
 template<typename T>
@@ -25,7 +24,7 @@ class FileArrayList {
 
     void writeSize() const {
         std::fseek(f,0,SEEK_SET);//start from the top
-        std::fread(&ct,sizeof(int),1,f);
+        std::fwrite(&ct,sizeof(int),1,f);
     }
 
     void readSize(int &sz) const {
@@ -78,14 +77,14 @@ class FileArrayList {
     const_iterator &operator--() {pos--; return *this;}
 
     const_iterator operator++(int){
-        auto ret = pos;
+        int ret = pos;
         this->pos = ret;
         ++pos;
         return *this;
     }
 
     const_iterator operator--(int){
-        auto ret = pos;
+        int ret = pos;
         this->pos = ret;
         --pos;
         return ret;
