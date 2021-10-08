@@ -12,9 +12,9 @@ class FileArrayList {
     FILE * f;//means T* elem in ArrayList.h
 
     // pribate helper functions
-    void writeElem(int index, const T &ele) const{
+    void writeElem(int index, const T &elem) const{
         std::fseek(f,sizeof(int) + index * sizeof(T), SEEK_SET);
-        std::fwrite(&ele,sizeof(T),1,f);
+        std::fwrite(&elem,sizeof(T),1,f);
     }
 
     void readElem(int index, T &ele) const{
@@ -60,8 +60,7 @@ class FileArrayList {
 
     T operator*() {
         T tmp;
-        std::fseek(fil,(pos * sizeof(T)),SEEK_SET);
-        std::fseek(fil,(pos * sizeof(T)),SEEK_SET);
+        std::fseek(fil,sizeof(int) + (pos * sizeof(T)),SEEK_SET);
         fread(&tmp,sizeof(T),1,fil);
         return tmp;
     }
