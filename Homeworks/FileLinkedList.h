@@ -22,6 +22,7 @@ class FileLinkedList {
 	public:
 		FileLinkedList(const std::string &fname);
 		void push_back(const T &t);
+		void pop_back();
 		T operator[](int index) const;
 		class const_iterator {
 			FILE *f;
@@ -103,6 +104,18 @@ void FileLinkedList<T>::push_back(const T &t) {
 	writePrev(0,n);
 	writeNext(tail,n);
 	++ct;
+	writeSizeAndFF();
+}
+
+template<typename T>
+void FileLinkedList<T>::pop_back() {
+	int tail = readPrev(0);
+	int tailPrev = readPrev(tail);
+	writeNext(tailPrev,0);
+	writePrev(0,tailPrev);
+	writeNext(tail,firstFree);
+	firstFree = tail;
+	--ct;
 	writeSizeAndFF();
 }
 
