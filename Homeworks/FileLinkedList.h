@@ -30,7 +30,7 @@ class FileLinkedList {
 				const_iterator(FILE * fi, int i) : f{fi},index{i} {}
 				const_iterator(const const_iterator &i) : f{i.f},index{i.index} {}
 				T operator*() {
-					fseek(f,sizeof(int)+index*sizeof(T),SEEK_SET);
+					std::fseek(f,2*sizeof(int)+index*(sizeof(T)+2*sizeof(int)),SEEK_SET);
 					T dat;
 					fread(&dat,sizeof(T),1,f);
 					return dat;
@@ -38,27 +38,37 @@ class FileLinkedList {
 				bool operator==(const const_iterator &i) {return index==i.index && f==i.f;}
 				bool operator!=(const const_iterator &i) {return !(*this == i);}
 				const_iterator& operator=(const const_iterator &i) {index=i.index;f=i.f;return *this;}
-				const_iterator& operator++() {++index; return *this;}
-				const_iterator& operator--() {--index; return *this;}
+				const_iterator& operator++() {
+					std::fseek(f,2*sizeof(int)+index*(sizeof(T)+2*sizeof(int))+sizeof(T)+sizeof(int), SEEK_SET);
+					std::fread(&index,sizeof(int),1,f);
+					return *this;
+				}
+				const_iterator& operator--() {
+					std::fseek(f,2*sizeof(int)+index*(sizeof(T)+2*sizeof(int))+sizeof(T), SEEK_SET);
+					std::fread(&index,sizeof(int),1,f);
+					return *this;
+				}
 				const_iterator operator++(int) {
 					const_iterator tmp(f, index);
-					++index;
+					std::fseek(f,2*sizeof(int)+index*(sizeof(T)+2*sizeof(int))+sizeof(T)+sizeof(int), SEEK_SET);
+					std::fread(&index,sizeof(int),1,f);
 					return tmp;
 				}
 				const_iterator operator--(int) {
 					const_iterator tmp(f, index);
-					--index;
+					std::fseek(f,2*sizeof(int)+index*(sizeof(T)+2*sizeof(int))+sizeof(T), SEEK_SET);
+					std::fread(&index,sizeof(int),1,f);
 					return tmp;
 				}
 				friend class FileLinkedList;
 		};
 
-		const_iterator begin() { return const_iterator(f, 0); };
-		const_iterator begin() const { return const_iterator(f, 0); };
-		const_iterator cbegin() const{ return const_iterator(f, 0); };
-		const_iterator end() { return const_iterator(f,ct);};
-		const_iterator end() const {return const_iterator(f,ct);};
-		const_iterator cend() const {return const_iterator(f,ct);};
+		const_iterator begin() { return const_iterator(f, readNext(0)); };
+		const_iterator begin() const { return const_iterator(f, readNext(0)); };
+		const_iterator cbegin() const{ return const_iterator(f, readNext(0)); };
+		const_iterator end() { return const_iterator(f,0);};
+		const_iterator end() const {return const_iterator(f,0);};
+		const_iterator cend() const {return const_iterator(f,0);};
 };
 
 template<typename T>
@@ -69,18 +79,31 @@ FileLinkedList<T>::FileLinkedList(const std::string &fname) {
 	if(std::ftell(f) > 0) { // data exists in file
 		std::fseek(f,0,SEEK_SET);
 		std::fread(&ct, sizeof(int), 1, f);
+		std::fread(&firstFree, sizeof(int), 1, f);
 	} else {
-		ct = 0;
+		ct = 1;
 		firstFree = -1;
-		writeSize();
+		writeSizeAndFF();
+		T sent;
+		writeElem(0,sent,0,0);
 	}
 }
 
 template<typename T>
 void FileLinkedList<T>::push_back(const T &t) {
-	writeElem(ct,t);
+	int n;
+	if (firstFree < 0) {
+		n = ct;
+	} else {
+		n = firstFree;
+		firstFree = readNext(firstFree);
+	}
+	int tail = readPrev(0);
+	writeElem(n,t,tail,0);
+	writePrev(0,n);
+	writeNext(tail,n);
 	++ct;
-	writeSize();
+	writeSizeAndFF();
 }
 
 template<typename T>
@@ -91,15 +114,43 @@ T FileLinkedList<T>::operator[](int index) const{
 }
 
 template<typename T>
-void FileLinkedList<T>::writeElem(int index, const T &elem) const {
-	std::fseek(f,sizeof(int)+(index*sizeof(T)),SEEK_SET);
+void FileLinkedList<T>::writeElem(int index, const T &elem, int prev, int next) const {
+	std::fseek(f,2*sizeof(int)+(index*(sizeof(T)+2*sizeof(int))),SEEK_SET);
 	std::fwrite(&elem,sizeof(T),1,f);
+	std::fwrite(&prev,sizeof(int),1,f);
+	std::fwrite(&next,sizeof(int),1,f);
 }
 
 template<typename T>
 void FileLinkedList<T>::readElem(int index, T &elem) const {
-	std::fseek(f,sizeof(int)+(index*sizeof(T)),SEEK_SET);
+	std::fseek(f,2*sizeof(int)+index*(sizeof(T)+2*sizeof(int)),SEEK_SET);
 	std::fread(&elem,sizeof(T),1,f);	
+}
+
+template<typename T>
+int FileLinkedList<T>::readNext(int index) const {
+	std::fseek(f,2*sizeof(int)+index*(sizeof(T)+2*sizeof(int))+sizeof(T)+sizeof(int), SEEK_SET);
+	int ret;
+	std::fread(&ret,sizeof(int),1,f);
+	return ret;
+}
+template<typename T>
+void FileLinkedList<T>::writeNext(int index, int next) const {
+	std::fseek(f,2*sizeof(int)+index*(sizeof(T)+2*sizeof(int))+sizeof(T)+sizeof(int), SEEK_SET);
+	std::fwrite(&next,sizeof(int),1,f);
+}
+ 
+template<typename T>
+int FileLinkedList<T>::readPrev(int index) const {
+	std::fseek(f,2*sizeof(int)+index*(sizeof(T)+2*sizeof(int))+sizeof(T), SEEK_SET);
+	int ret;
+	std::fread(&ret,sizeof(int),1,f);
+	return ret;
+} 
+template<typename T>
+void FileLinkedList<T>::writePrev(int index, int prev) const {
+	std::fseek(f,2*sizeof(int)+index*(sizeof(T)+2*sizeof(int))+sizeof(T), SEEK_SET);
+	std::fwrite(&prev, sizeof(int),1,f);
 }
 
 template<typename T>
