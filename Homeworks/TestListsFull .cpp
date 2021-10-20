@@ -95,9 +95,7 @@ bool simpleTest(T &lst1,const string &secondFile) {
 	}
 	cnt = 9;
 	for(auto iter = --lst1.end(); iter!=lst1.begin(); --iter) {
-		cout<<*iter<<endl;
 		if(*iter!=cnt) {
-			cout<<cnt<<endl;
 			cout << "--iter error " << cnt << endl;
 			return false;
 		}
