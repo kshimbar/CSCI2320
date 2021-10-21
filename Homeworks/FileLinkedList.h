@@ -10,7 +10,8 @@ FileLinkedList(const FileLinkedList<T> &that) = delete;
 FileLinkedList<T> operator=(const FileLinkedList<T> &that) = delete;
 
     FILE * f;
-    int ct, firstFree;
+    int ct
+	int firstFree;
     void writeElem(int index, const T &elem, int prev, int next) const {
         fseek(f, (2 * sizeof(int)) + (index * ((2 * sizeof(int)) + sizeof(T))), SEEK_SET);
         fwrite(&prev, sizeof(int), 1, f);
@@ -55,7 +56,6 @@ public:
 typedef T value_type;
 
 class const_iterator {
-// TODO - Your private data.
 int loc;
 FILE * file;
 public:
@@ -102,9 +102,6 @@ const_iterator operator--(int){
 friend class FileLinkedList;
 };
 
-// General Methods
-
- // The type I will be an iterator.
 FileLinkedList(const std::string &fname) {
     f = fopen(fname.c_str(), "r+");
     if (f == nullptr) f = fopen(fname.c_str(), "w+");
@@ -121,10 +118,9 @@ FileLinkedList(const std::string &fname) {
         T garbage;
         writeElem(0, garbage, 0, 0);
     }
-// TODO - Write this one here. It is easier than trying to fight with adding a template below.
 }
 
-template<typename I> // The type I will be an iterator.
+template<typename I> 
 FileLinkedList(I begin,I end,const std::string &fname) {
     f = fopen(fname.c_str(), "r+");
     if (f == nullptr) f = fopen(fname.c_str(), "w+");

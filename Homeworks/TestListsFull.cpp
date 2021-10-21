@@ -118,10 +118,10 @@ bool simpleTest(T &lst1,const string &secondFile) {
 	if(lst2[3]!=8) { cout << "After erase lst2[3]." << endl; return false; }
 	if(lst2[4]!=9) { cout << "After erase lst2[4]." << endl; return false; }
 	lst2.insert(++++++lst2.begin(),98);
-	if(lst2[0]!=5) { cout << "After insert lst2[0]." << endl; return false; }
-	for(int i = 0; i < 6; ++i){
+	for(int i = 0; i < 10; ++i){
 		cout<<lst2[i]<<endl;
 	}
+	if(lst2[0]!=5) { cout << "After insert lst2[0]." << endl; return false; }
 	if(lst2[1]!=6) { cout << "After insert lst2[1]." << endl; return false; }
 	if(lst2[2]!=99) { cout << "After insert lst2[2]." << endl; return false; }
 	if(lst2[3]!=98) { cout << "After insert lst2[3]." << endl; return false; }
