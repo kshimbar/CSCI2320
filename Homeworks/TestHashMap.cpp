@@ -143,6 +143,7 @@ int doTests() {
 		return 2;
 	}
 	if(hash.count(16)!=1) {
+		cout << hash.count(16) << endl;
 		cout << "Incorrect count A." << endl;
 		return 2;
 	}
@@ -182,6 +183,7 @@ int doTests() {
 		return 2;
 	}
 	if(hash2.size()!=5) {
+		cout << hash2.size()<<endl;
 		cout << "Size off in simple tests AB." << endl;
 		return 2;
 	}
