@@ -182,6 +182,7 @@ int doTests() {
 		cout << "Equality check failed." << endl;
 		return 2;
 	}
+
 	if(hash2.size()!=5) {
 		cout << hash2.size()<<endl;
 		cout << "Size off in simple tests AB." << endl;
@@ -192,6 +193,7 @@ int doTests() {
 		make_pair(7,"seven"),make_pair(8,"eight"),make_pair(9,"nine"),
 		make_pair(2,"TWO")};
 	hash2.insert(v.begin(),v.end());
+	
 	if(hash2.size()!=10) {
 		cout << "Size off in simple tests AC." << endl;
 		return 2;
@@ -367,6 +369,7 @@ int doTests() {
 			}
 		}
 	}
+	
 	if(um2.size()!=hash2.size()) {
 		cout << "Size disagreement after erase. " << um2.size() << " " << hash2.size() << endl;
 		return 2;
